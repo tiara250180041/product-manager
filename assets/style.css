@@ -1,0 +1,86 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+h1, h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+/* Tombol Tambah Produk yang Cantik */
+.btn, button[type="submit"], a.btn-add {
+    background-color: #4e73df;
+    color: white;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    transition: background 0.2s;
+}
+
+.btn:hover, button[type="submit"]:hover {
+    background-color: #2e59d9;
+}
+
+/* Tabel Biar Lebih Berwarna dan Rapi */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th {
+    background-color: #4e73df;
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+}
+
+td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e3e6f0;
+}
+
+/* Efek selang-seling warna baris tabel biar gampang dibaca */
+tr:nth-child(even) {
+    background-color: #f8f9fc;
+}
+
+tr:hover {
+    background-color: #eaecf4;
+}
+
+/* Warna untuk Tombol Aksi (Edit & Hapus) */
+td a {
+    color: #4e73df;
+    text-decoration: none;
+    font-weight: 600;
+    margin-right: 8px;
+}
+
+td a:hover {
+    text-decoration: underline;
+}
+
+td a[href*="delete"] {
+    color: #e74a3b;
+}
