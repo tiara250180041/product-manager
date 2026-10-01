@@ -14,9 +14,13 @@ CREATE TABLE IF NOT EXISTS products (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- (Opsional) Masukkan data dummy awal untuk uji coba
+-- Masukkan data khusus perlengkapan alat belajar
 INSERT INTO products (name, category, price, stock) VALUES
-('Es Teh Manis Original', 'Minuman', 5000, 25),
-('Es Teh Lemon', 'Minuman', 7000, 12),
-('Es Teh Susu', 'Minuman', 8000, 3),
-('French Fries', 'Snack', 12000, 8);
+('Buku Tulis Kiky', 'Alat Tulis', 5000, 20),
+('Pulpen Standard AE7', 'Alat Tulis', 3500, 50),
+('Penggaris Besi 30cm', 'Alat Ukur', 4000, 15),
+('Correction Tape Joyko', 'Peralatan', 8000, 25),
+('Buku Gambar A4', 'Buku', 6500, 10),
+('Pensil 2B Faber Castell', 'Alat Tulis', 4500, 30),
+('Penghapus Karet Joyko', 'Peralatan', 2000, 40),
+('Spidol Warna Joyko', 'Alat Tulis', 15000, 12);
