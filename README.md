@@ -1,74 +1,119 @@
-# Product Manager
+# Product Manager - Web Aplikasi Perlengkapan Alat Belajar
 
-Aplikasi web inventaris produk berbasis **PHP (PDO)** dan **MySQL** yang dirancang untuk mengelola data produk, memantau statistik stok secara *real-time*, serta melakukan operasi CRUD (Create, Read, Update, Delete) secara lengkap, aman, dan terstruktur dengan antarmuka bertema *Dark Mode Enterprise*.
+Aplikasi web inventaris produk berbasis **PHP (PDO)** dan **MySQL** yang dirancang khusus untuk mengelola data produk perlengkapan alat belajar secara *real-time*, efisien, dan terstruktur. Proyek ini dibangun untuk memenuhi standar pengembangan aplikasi web modern dengan antarmuka yang bersih serta sistem keamanan yang ketat.
 
-## 📂 Struktur Proyek & Penjelasan File (Directory Structure)
+---
+
+## 1. Deskripsi Proyek
+Product Manager adalah sistem manajemen inventaris berbasis web yang memudahkan penggunanya dalam melakukan pencatatan, pemantauan, dan pengelolaan stok barang secara digital. Berfokus pada tema perlengkapan alat belajar (seperti buku, alat tulis, dan peralatan sekolah), aplikasi ini dilengkapi dengan dashboard analitik otomatis untuk memantau nilai aset serta mendeteksi ketersediaan stok secara langsung.
+
+---
+
+## 2. Tujuan Proyek
+Adapun beberapa tujuan utama dari pengembangan aplikasi Product Manager ini adalah:
+* **Digitalisasi Manajemen Stok**: Mengganti sistem pencatatan inventaris alat belajar manual ke dalam bentuk sistem digital berbasis web yang lebih cepat, minim kesalahan, dan terpusat.
+* **Optimalisasi Pengelolaan Katalog**: Memudahkan admin atau pengguna dalam menambah, memperbarui, memantau, dan menghapus data produk alat belajar secara efisien melalui fitur CRUD yang interaktif.
+* **Keamanan Data dan Transaksi**: Menerapkan standar keamanan tingkat lanjut seperti perlindungan terhadap serangan *CSRF* dan pencegahan *SQL Injection* untuk menjamin integritas data inventaris.
+* **Memenuhi Standar Akademik**: Disusun sebagai bentuk pemenuhan tugas dan proyek pengembangan perangkat lunak berbasis web dengan penerapan arsitektur pemrograman yang bersih (*Clean Code*).
+
+---
+
+## 3. Kriteria dan Fitur Utama
+Aplikasi ini dikembangkan dengan memenuhi berbagai kriteria fungsional dan teknis untuk memastikan performa yang optimal:
+
+| No | Fitur | Deskripsi Implementasi |
+| :--- | :--- | :--- |
+| 1 | **Create** | Menambah data perlengkapan alat belajar baru dengan validasi panjang nama (min. 3 karakter), harga/stok non-negatif, dan cek duplikasi nama. |
+| 2 | **Read** | Menampilkan katalog produk secara *real-time* dalam bentuk Card Layout responsif dan tabel data yang rapi. |
+| 3 | **Update** | Mengubah data produk berbasis ID dengan tetap menerapkan aturan validasi ketat pada sisi server. |
+| 4 | **Delete** | Menghapus data produk secara aman dari sistem database berdasarkan parameter ID yang spesifik. |
+
+* **Keamanan Enterprise**:
+  * **CSRF Protection**: Melindungi setiap form pengiriman data dari eksploitasi berbahaya menggunakan modul token keamanan khusus (`includes/csrf.php`).
+  * **SQL Injection Prevention**: Seluruh kueri basis data menggunakan *Prepared Statements* pada objek PDO untuk keamanan data yang maksimal.
+
+---
+
+## 4. Struktur Proyek & Penjelasan Direktori
+Berikut adalah rincian hierarki file dan direktori yang terdapat di dalam proyek `product-manager`:
 
 product-manager/
 ├── assets/
-│   └── style.css          # Berkas gaya antarmuka (stylesheet) dengan tema Dark/Indigo modern
+│   └── style.css          # Berkas gaya antarmuka (stylesheet) tema Dark/Indigo modern
 ├── config/
 │   └── database.php       # Berkas konfigurasi utama untuk koneksi database menggunakan PDO
 ├── includes/
-│   └── csrf.php           # Modul keamanan untuk menghasilkan dan memvalidasi token CSRF
-├── database.sql           # Berkas skema database MySQL serta data awal (dummy data)
-├── schema.php             # Skrip PHP otomatisasi untuk membuat database & tabel secara instan
-├── index.php              # Halaman utama (Dashboard Statistik, Ringkasan, & Tabel Daftar Produk)
-├── create.php             # Form antarmuka & logika backend untuk menambah produk baru
-├── edit.php               # Form antarmuka & logika backend untuk mengubah data produk
-├── delete.php             # Proses backend untuk menghapus data produk berdasarkan ID
+│   └── csrf.php           # Helper modul keamanan dan validasi token CSRF
+├── database.sql           # Berkas skema tabel MySQL dan data awal perlengkapan alat belajar
+├── index.php              # Halaman utama, dashboard statistik, dan katalog produk
+├── create.php             # Antarmuka form dan logika backend untuk menambah produk baru
+├── edit.php               # Antarmuka form dan logika backend untuk mengubah data produk
+├── delete.php             # Proses backend untuk mengeksekusi penghapusan data produk
 └── README.md              # Dokumentasi lengkap proyek
 
-## 🔄 Alur Kerja Sistem (Workflow)
+---
 
-1. Inisialisasi & Koneksi Database (`config/database.php`):
-   - Aplikasi terhubung ke server MySQL menggunakan **PDO (PHP Data Objects)** melalui konfigurasi terpusat dengan penanganan error (*try-catch*) yang aman dan responsif.
-2. Skema & Otomatisasi Database (`schema.php` & `database.sql`):
-   - Database `product_manager_db` beserta tabel `products` diinisialisasi melalui file SQL atau dijalankan secara otomatis via file `schema.php` di browser.
-3. Dashboard Utama & Statistik (`index.php`):
-   - Saat halaman diakses, sistem melakukan *query* ke database untuk menghitung statistik penting secara otomatis: 
-     - **Total Jenis Produk:** Jumlah keseluruhan varian item produk yang terdaftar.
-     - **Total Nilai Aset:** Kalkulasi otomatis perkalian harga dan stok seluruh produk (`Harga × Stok`).
-     - **Stok Kritis (Low Stock Alert):** Indikator peringatan jika terdapat produk dengan jumlah stok di bawah 5 item.
-   - Seluruh data produk ditarik dan ditampilkan dalam bentuk tabel HTML terstruktur secara urut kronologis, lengkap dengan tombol aksi **Edit** dan **Hapus**.
-4. Tambah Produk Baru (`create.php`):
-   - Pengguna mengisi form interaktif (Nama, Kategori, Harga, dan Stok).
-   - Data divalidasi dan diamankan menggunakan token keamanan dari `includes/csrf.php` untuk mencegah serangan *CSRF*, lalu disimpan ke database melalui *prepared statement* PDO.
-5. Ubah Data Produk (`edit.php`):
-   - Pengguna memilih produk yang ingin diperbarui. Form akan terisi data lama secara otomatis, kemudian data baru disimpan kembali ke database.
-6. Hapus Produk (`delete.php`):
-   - Ketika tombol hapus dikonfirmasi, sistem memvalidasi permintaan dan mengeksekusi perintah `DELETE` SQL berdasarkan parameter `id` produk yang dipilih.
+## 5. Alur Kerja Sistem (Workflow)
+1. **Inisialisasi & Koneksi Database (`config/database.php`)**: Koneksi ke server database dikelola secara terpusat menggunakan PHP Data Objects (PDO) yang dilengkapi penanganan error *try-catch* demi keamanan dan kestabilan sistem.
+2. **Pemuatan Skema Database (`database.sql`)**: Struktur tabel `products` diinisialisasi untuk menampung data penting seperti ID, nama barang, kategori, harga, stok, dan waktu pembuatan data otomatis.
+3. **Dashboard & Pemrosesan Statistik (`index.php`)**: Saat halaman utama diakses, sistem mengeksekusi *query* agregat untuk menghitung jumlah total varian produk dan total nilai inventaris secara dinamis.
+4. **Operasi Data (Tambah, Ubah, Hapus)**: Setiap aksi perubahan data divalidasi dengan cermat di sisi server sebelum disimpan atau dieksekusi pada database MySQL.
 
-## ✨ Fitur Utama (Features)
+---
 
-1. Dashboard Statistik Otomatis:
-   - Kalkulasi real-time untuk total jenis produk, total nilai aset, dan peringatan stok kritis.
-2. Manajemen Data Lengkap (CRUD):
-   - **Create:** Input data produk baru dengan validasi form ketat.
-   - **Read:** Menampilkan daftar produk secara terstruktur dan kronologis.
-   - **Update:** Memperbarui informasi detail produk dengan mudah.
-   - **Delete:** Menghapus data produk secara permanen dari database.
-3. Keamanan Enterprise:
-   - **CSRF Protection:** Melindungi setiap form dari eksploitasi pengiriman data berbahaya menggunakan modul `includes/csrf.php`.
-   - **SQL Injection Prevention:** Seluruh kueri menggunakan *Prepared Statements* pada **PDO**.
+## 6. Struktur Tabel Database (`database.sql`)
+Berikut adalah rincian kolom yang digunakan pada tabel `products` di dalam database:
 
-## 🛠️ Teknologi yang Digunakan (Tech Stack)
+| Nama Kolom | Tipe Data | Keterangan |
+| :--- | :--- | :--- |
+| `id` | INT (Auto Increment) | ID unik produk sebagai *Primary Key* |
+| `name` | VARCHAR(255) | Nama produk perlengkapan alat belajar |
+| `category` | VARCHAR(100) | Kategori barang (Contoh: Alat Tulis, Buku, dll.) |
+| `price` | INT | Harga satuan barang dalam bentuk angka (Rupiah) |
+| `stock` | INT | Jumlah ketersediaan stok barang di inventaris |
+| `created_at` | TIMESTAMP | Waktu pencatatan data secara otomatis |
 
-- **Backend Language:** PHP (Native / PDO)
-- **Database Management:** MySQL / MariaDB (via XAMPP)
-- **Frontend Styling:** HTML5, CSS3 (`assets/style.css`), Google Fonts (Inter)
-- **Local Web Server:** Apache (XAMPP)
+---
 
-## ⚙️ Panduan Instalasi & Menjalankan Proyek (Installation Guide)
+## 7. Teknologi yang Digunakan (Tech Stack)
+* **Backend Language**: PHP (Native / Object-Oriented approach with PDO)
+* **Database Management**: MySQL / MariaDB (dijalankan melalui local server XAMPP)
+* **Frontend Styling & UI**: HTML5, CSS3 (`assets/style.css`), Google Fonts (Inter), Flexbox & CSS Grid
+* **Development Environment**: Visual Studio Code
 
-1. Pindahkan Folder Proyek:
-   - Letakkan seluruh folder proyek ke dalam direktori server lokal XAMPP Anda: `C:\xampp\htdocs\product-manager/`
-2. Nyalakan Server XAMPP:
-   - Buka aplikasi **XAMPP Control Panel**, lalu klik **Start** pada modul **Apache** dan **MySQL**.
-3. Konfigurasi Database:
-   - Buka browser dan akses `http://localhost/phpmyadmin/`.
-   - Buat database baru dengan nama `product_manager_db`.
-   - **Opsi A:** Import file `database.sql` yang ada di dalam folder proyek.
-   - **Opsi B:** Akses skrip otomatis melalui browser pada alamat: `http://localhost/product-manager/schema.php`
-4. Jalankan Aplikasi:
-   - Buka tab browser baru dan ketikkan alamat utama aplikasi: `http://localhost/product-manager/`
+---
+
+## 8. Contoh Data Awal Perlengkapan Alat Belajar (Dummy Data)
+Berikut adalah daftar sampel data produk alat belajar yang otomatis dimuat ke dalam database dalam bentuk tabel:
+
+| Nama Produk | Kategori | Harga Satuan | Jumlah Stok |
+| :--- | :--- | :--- | :--- |
+| Buku Tulis Kiky | Alat Tulis | Rp 5.000 | 20 Pcs |
+| Pulpen Standard AE7 | Alat Tulis | Rp 3.500 | 50 Pcs |
+| Penggaris Besi 30cm | Alat Ukur | Rp 4.000 | 15 Pcs |
+| Correction Tape Joyko | Peralatan | Rp 8.000 | 25 Pcs |
+| Buku Gambar A4 | Buku | Rp 6.500 | 10 Pcs |
+| Pensil 2B Faber Castell | Alat Tulis | Rp 4.500 | 30 Pcs |
+| Penghapus Karet Joyko | Peralatan | Rp 2.000 | 40 Pcs |
+| Spidol Warna Joyko | Alat Tulis | Rp 15.000 | 12 Pcs |
+
+---
+
+## 9. Prasyarat Sistem (Prerequisites)
+Sebelum menjalankan aplikasi ini, pastikan perangkat Anda telah terpasang perangkat lunak berikut:
+* **Web Server**: Apache (terintegrasi dalam XAMPP versi terbaru).
+* **Database**: MySQL / MariaDB.
+* **PHP Engine**: Minimal PHP versi 8.0 atau yang lebih baru dengan ekstensi PDO aktif.
+* **Browser**: Google Chrome, Mozilla Firefox, atau Microsoft Edge versi terbaru.
+
+---
+
+## 10. Cara Menjalankan Proyek (Installation Guide)
+Bagi Anda yang ingin menjalankan proyek ini di komputer lokal, ikuti langkah-langkah di bawah ini:
+1. Pastikan aplikasi **XAMPP** sudah terinstal dan layanan **Apache** serta **MySQL** telah diaktifkan (*Start*).
+2. Unduh atau kumpulkan folder proyek `product-manager` ke dalam direktori server lokal Anda (biasanya terletak di `C:\xampp\htdocs\`).
+3. Buka browser, akses **phpMyAdmin** (`http://localhost/phpmyadmin/`), lalu buat database baru dengan nama `product_manager_db`.
+4. Pilih database tersebut, masuk ke menu **Import**, lalu pilih dan unggah file `database.sql` yang ada di dalam folder proyek.
+5. Buka tab browser baru dan jalankan aplikasi dengan mengakses tautan berikut:
+   ```text
+   http://localhost/product-manager/
