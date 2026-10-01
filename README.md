@@ -1,4 +1,4 @@
-# Product Manager 
+# Product Manager - Web Aplikasi Perlengkapan Alat Belajar
 
 Aplikasi web inventaris produk berbasis **PHP (PDO)** dan **MySQL** yang dirancang khusus untuk mengelola data produk perlengkapan alat belajar secara *real-time*, efisien, dan terstruktur. Proyek ini dibangun untuk memenuhi standar pengembangan aplikasi web modern dengan antarmuka yang bersih serta sistem keamanan yang ketat.
 
